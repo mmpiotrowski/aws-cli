@@ -1,11 +1,10 @@
 name: build-and-push-to-dh
-on: workflow_dispatch
-# on:
-#   schedule:
-#     # * is a special character in YAML so you have to quote this string
-#     - cron:  '17 18 * * *'
+on:
+   schedule:
+     # * is a special character in YAML so you have to quote this string
+     - cron:  '30 20 * * *'
 jobs:
-  sheduled-update:
+  scheduled-update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

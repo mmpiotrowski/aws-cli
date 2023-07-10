@@ -7,6 +7,7 @@ REFS_TAG=$(git ls-remote --tags https://github.com/aws/aws-cli.git | awk '{print
 CURRENT_AWS_CLI_V1=${REFS_TAG/"refs/tags/"/""}
 
 ./build.sh $CURRENT_AWS_CLI_V1
+./push.sh $CURRENT_AWS_CLI_V1
 
 UPDATED=0
 if ! git tag -l | grep -q ${CURRENT_AWS_CLI_V1}; then
@@ -19,6 +20,7 @@ REFS_TAG=$(git ls-remote --tags https://github.com/aws/aws-cli.git | awk '{print
 CURRENT_AWS_CLI_V2=${REFS_TAG/"refs/tags/"/""}
 
 ./build.sh $CURRENT_AWS_CLI_V2
+./push.sh $CURRENT_AWS_CLI_V2
 
 if ! git tag -l | grep -q ${CURRENT_AWS_CLI_V2}; then
    git tag $CURRENT_AWS_CLI_V2
