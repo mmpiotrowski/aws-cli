@@ -13,7 +13,7 @@ if ! git tag -l | grep -q ${CURRENT_AWS_CLI_V1}; then
 fi
 
 
-REFS_TAG=$(git ls-remote --tags https://github.com/aws/aws-cli.git | awk '{print $2}' | grep /2. | grep -v '{}' | sort -rV | head -n2)
+REFS_TAG=$(git ls-remote --tags https://github.com/aws/aws-cli.git | awk '{print $2}' | grep /2. | grep -v '{}' | sort -rV | head -n1)
 CURRENT_AWS_CLI_V2=${REFS_TAG/"refs/tags/"/""}
 
 ./build.sh $CURRENT_AWS_CLI_V2
