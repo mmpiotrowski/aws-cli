@@ -8,7 +8,7 @@ CURRENT_AWS_CLI_V1=${REFS_TAG/"refs/tags/"/""}
 
 ./build.sh $CURRENT_AWS_CLI_V1
 
-if ! git tag --contains | grep -q ${CURRENT_AWS_CLI_V1}; then
+if ! git tag -l | grep -q ${CURRENT_AWS_CLI_V1}; then
    git tag $CURRENT_AWS_CLI_V1
 fi
 
@@ -18,7 +18,7 @@ CURRENT_AWS_CLI_V2=${REFS_TAG/"refs/tags/"/""}
 
 ./build.sh $CURRENT_AWS_CLI_V2
 
-if ! git tag --contains | grep -q ${CURRENT_AWS_CLI_V2}; then
+if ! git tag -l | grep -q ${CURRENT_AWS_CLI_V2}; then
    git tag $CURRENT_AWS_CLI_V2
 fi
 
