@@ -1,5 +1,8 @@
 #!/bin/bash
-set -eu
+set -eux
+
+GITHUB_ACTION=${GITHUB_ACTION:-""}
+
 
 cd $(dirname $0)
 
@@ -25,10 +28,12 @@ if ! git tag -l | grep -q ${CURRENT_AWS_CLI_V2}; then
    UPDATED=1
 fi
 
+# https://joht.github.io/johtizen/build/2022/01/20/github-actions-push-into-repository.html#example-1
 if [ ${UPDATED} != 0 ]; then
     git commit --allow-empty -m "Update aws-cli versions"
-    # https://joht.github.io/johtizen/build/2022/01/20/github-actions-push-into-repository.html#example-1
-    git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
-    git config --global user.email "workflows@github.com"
+    if [ ! -z ${GITHUB_ACTION} ]; then
+        git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+        git config --global user.email "workflows@github.com"
+    fi
     git push && git push --tags
 fi
