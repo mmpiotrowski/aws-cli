@@ -1,8 +1,9 @@
 name: build-and-push-to-dh
-on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '17 18 * * *'
+on: workflow_dispatch
+# on:
+#   schedule:
+#     # * is a special character in YAML so you have to quote this string
+#     - cron:  '17 18 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
