@@ -5,7 +5,7 @@ on: workflow_dispatch
 #     # * is a special character in YAML so you have to quote this string
 #     - cron:  '17 18 * * *'
 jobs:
-  build-and-push:
+  sheduled-update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,5 +15,8 @@ jobs:
         with:
             username: ${{ secrets.DH_USERNAME }}
             password: ${{ secrets.DH_TOKEN }}
-      - name: build
+      - name: config git
+        run: git config --global user.email "workflow@github.com" \
+             git config --global user.name "Automated workflow"
+      - name: build-and-push
         run: ./build-current.sh
