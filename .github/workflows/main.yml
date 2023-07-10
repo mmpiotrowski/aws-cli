@@ -5,11 +5,15 @@ on: workflow_dispatch
 #     # * is a special character in YAML so you have to quote this string
 #     - cron:  '17 18 * * *'
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: config
-        run: ./build-current.sh   
-   
-     
+        with: 
+          token: ${{ secrets.WORKFLOW_GIT_ACCESS_TOKEN }}
+      - uses: docker/login-action@v2
+        with:
+            username: ${{ secrets.DH_USERNAME }}
+            password: ${{ secrets.DH_TOKEN }}
+      - name: build
+        run: ./build-current.sh
