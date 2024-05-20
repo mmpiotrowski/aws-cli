@@ -2,9 +2,13 @@ from ubuntu:22.04
 
 ARG AWS_CLI_VERSION
 
+LABEL aws_cli.version=${AWS_CLI_VERSION}
+
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     unzip curl groff python3 python-is-python3 python3-venv
+
+
 
 # https://docs.aws.amazon.com/cli/v1/userguide/install-linux.html
 RUN cd /tmp && curl "https://s3.amazonaws.com/aws-cli/awscli-bundle-${AWS_CLI_VERSION}.zip" -o "awscli.zip" \
@@ -14,6 +18,12 @@ RUN cd /tmp && curl "https://s3.amazonaws.com/aws-cli/awscli-bundle-${AWS_CLI_VE
     
 RUN echo "complete -C '/usr/local/aws/bin/aws_completer' aws" >> /etc/bash.bashrc
 
-WORKDIR /aws
+COPY /assets /assets/
 
-ENTRYPOINT ["/usr/local/bin/aws"]
+RUN useradd --create-home --shell /bin/bash user \
+    && mkdir -p /home/user/workdir \
+    && chown user:user -R /home/user
+
+WORKDIR /home/user/workdir
+
+ENTRYPOINT ["/assets/scripts/entrypoint.sh", "aws"]
